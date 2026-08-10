@@ -20,8 +20,11 @@ interface Props {
  * The PUMP balance lives on Pumpchain (our backend), not on Solana.
  */
 export function WalletProvider({ children }: Props) {
-  // Use Helius mainnet RPC for wallet balance lookups
-  const endpoint = useMemo(() => 'https://mainnet.helius-rpc.com/?api-key=d50b7d5a-2a55-4abf-aa03-0f679bd4d7a7', []);
+  // Use Helius mainnet RPC
+  const endpoint = useMemo(
+    () => import.meta.env.VITE_SOLANA_RPC_URL || 'https://mainnet.helius-rpc.com/?api-key=d50b7d5a-2a55-4abf-aa03-0f679bd4d7a7',
+    [],
+  );
 
   const wallets = useMemo(
     () => [new PhantomWalletAdapter(), new SolflareWalletAdapter()],

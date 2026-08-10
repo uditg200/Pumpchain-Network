@@ -24,9 +24,9 @@ export const app = express();
 // Helmet: security headers (CSP, HSTS, X-Frame, etc.)
 app.use(helmet());
 
-// CORS: restrict to configured origin
+// CORS: allow configured origin + production domain
 app.use(cors({
-  origin: env.CORS_ORIGIN,
+  origin: [env.CORS_ORIGIN, 'https://pumpchain.network', 'https://www.pumpchain.network'],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   maxAge: 86400,

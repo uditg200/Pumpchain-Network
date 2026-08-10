@@ -34,6 +34,9 @@ const MAX_RECONNECT_DELAY_MS = 30_000;
 const BASE_RECONNECT_DELAY_MS = 1_000;
 
 function getWsUrl(): string {
+  // Use env variable in production, fallback to same-origin in dev
+  const envWs = (import.meta as any).env?.VITE_WS_URL;
+  if (envWs) return envWs;
   const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
   return `${proto}//${window.location.host}/ws`;
 }

@@ -1,0 +1,9 @@
+{
+  "buildCommand": "cd .. && npm run build:shared && cd frontend && npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "cd .. && npm install",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/((?!api|ws).*)", "destination": "/index.html" }
+  ]
+}

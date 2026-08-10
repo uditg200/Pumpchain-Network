@@ -5,7 +5,7 @@ import { WalletConnectButton } from '../components/wallet/index.js';
 import { CopyButton } from '../components/ui/index.js';
 import { fetchApi } from '../lib/api.js';
 
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 
 interface BridgeStats {
   totalBridged: string;

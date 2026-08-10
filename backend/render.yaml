@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: pumpchain-backend
+    runtime: node
+    region: oregon
+    buildCommand: cd .. && npm install && npm run build:shared && npm run build --workspace=backend
+    startCommand: cd backend && node dist/index.js
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGIN
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SOLANA_RPC_URL
+        sync: false
+      - key: PUMPCHAIN_NETWORK_ID
+        value: pumpchain-mainnet
+      - key: PUMPCHAIN_CHAIN_NAME
+        value: Pumpchain Network
+      - key: PUMPCHAIN_NATIVE_SYMBOL
+        value: PUMP
+      - key: PUMPCHAIN_ENVIRONMENT
+        value: mainnet
+      - key: BRIDGE_WALLET_PRIVATE_KEY
+        sync: false
