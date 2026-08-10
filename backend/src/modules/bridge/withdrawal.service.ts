@@ -54,6 +54,8 @@ export class BridgeWithdrawalService {
     const balance = account?.balance ?? 0n;
     // Input amount is in Pumpchain units (9 decimals)
     const amount = BigInt(input.amount);
+    // Convert to Solana 6-decimal format for consistent DB storage
+    const amountForDb = (amount / 1000n).toString();
 
     if (balance < amount) {
       await this.db.insert(bridgeTransactions).values({
@@ -65,7 +67,7 @@ export class BridgeWithdrawalService {
         destinationTxHash: null,
         walletAddress: input.walletAddress,
         asset: input.asset,
-        amount: input.amount,
+        amount: amountForDb,
         status: BridgeStatus.Failed,
         createdAt: now,
       });
@@ -79,7 +81,7 @@ export class BridgeWithdrawalService {
         destinationTxHash: null,
         walletAddress: input.walletAddress,
         asset: input.asset,
-        amount: input.amount,
+        amount: amountForDb,
         status: BridgeStatus.Failed,
         errorMessage: `Insufficient balance: has ${balance.toString()}, needs ${input.amount}`,
         createdAt: now.toISOString(),
@@ -89,6 +91,7 @@ export class BridgeWithdrawalService {
     }
 
     // 2. Record as INITIATED
+
     await this.db.insert(bridgeTransactions).values({
       bridgeTxId: bridgeId,
       direction: BridgeDirection.Withdraw,
@@ -98,7 +101,7 @@ export class BridgeWithdrawalService {
       destinationTxHash: null,
       walletAddress: input.walletAddress,
       asset: input.asset,
-      amount: input.amount,
+      amount: amountForDb,
       status: BridgeStatus.Initiated,
       createdAt: now,
     });
@@ -131,7 +134,7 @@ export class BridgeWithdrawalService {
         destinationTxHash: null,
         walletAddress: input.walletAddress,
         asset: input.asset,
-        amount: input.amount,
+        amount: amountForDb,
         status: BridgeStatus.Failed,
         errorMessage: errorMsg,
         createdAt: now.toISOString(),
@@ -160,7 +163,7 @@ export class BridgeWithdrawalService {
       destinationTxHash: solanaSignature,
       walletAddress: input.walletAddress,
       asset: input.asset,
-      amount: input.amount,
+      amount: amountForDb,
       status: BridgeStatus.Confirmed,
       errorMessage: null,
       createdAt: now.toISOString(),
@@ -267,3 +270,5 @@ export class BridgeWithdrawalService {
     return signature;
   }
 }
+
+
