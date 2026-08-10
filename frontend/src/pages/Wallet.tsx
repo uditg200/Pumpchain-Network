@@ -73,7 +73,7 @@ export function WalletPage() {
   const { data: gasEstimate } = useQuery<GasEstimate>({
     queryKey: ['gas-estimate'],
     queryFn: async () => {
-      const res = await fetch('/api/transactions/estimate', {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/api'}/transactions/estimate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'TRANSFER' }),
@@ -89,7 +89,7 @@ export function WalletPage() {
   const { data: txHistory } = useQuery<{ transactions: TxHistoryItem[]; total: number }>({
     queryKey: ['wallet-tx-history', walletAddress],
     queryFn: async () => {
-      const res = await fetch(`/api/accounts/${walletAddress}/transactions?page=1&pageSize=10`);
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/api'}/accounts/${walletAddress}/transactions?page=1&pageSize=10`);
       const json = await res.json();
       if (!json.success) return { transactions: [], total: 0 };
       return { transactions: json.data ?? [], total: json.meta?.totalItems ?? 0 };
@@ -119,7 +119,7 @@ export function WalletPage() {
       confirmation.setStatus('submitted');
 
       // Submit to backend
-      const res = await fetch('/api/transactions/submit', {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/api'}/transactions/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

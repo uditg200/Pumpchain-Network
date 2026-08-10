@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { CopyButton } from '../components/ui/index.js';
 
-const RPC_URL = `${window.location.origin}/api/rpc`;
+const RPC_URL = `${import.meta.env.VITE_API_BASE_URL || window.location.origin + '/api'}/rpc`;
 
 const SECTIONS = [
   'Quick Start',

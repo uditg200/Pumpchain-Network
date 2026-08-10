@@ -36,7 +36,7 @@ export function AddressDetailPage() {
   const { data: txData } = useQuery<{ transactions: Tx[]; total: number }>({
     queryKey: ['account-txs', address],
     queryFn: async () => {
-      const res = await fetch(`/api/accounts/${address}/transactions?page=1&pageSize=10`);
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/api'}/accounts/${address}/transactions?page=1&pageSize=10`);
       const json = await res.json();
       if (!json.success) return { transactions: [], total: 0 };
       return { transactions: json.data ?? [], total: json.meta?.totalItems ?? 0 };

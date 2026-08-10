@@ -110,7 +110,8 @@ export function useTransactionConfirmation() {
 
       pollRef.current = setInterval(async () => {
         try {
-          const res = await fetch(`/api/transactions/${txHash}/status`);
+          const apiBase = (import.meta as any).env?.VITE_API_BASE_URL || '/api';
+          const res = await fetch(`${apiBase}/transactions/${txHash}/status`);
           const json = await res.json();
           if (!json.success) return;
 
