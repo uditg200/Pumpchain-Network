@@ -294,18 +294,6 @@ export function BridgePage() {
               </button>
             </div>
 
-            {/* Deposit Instructions */}
-            {direction === 'deposit' && bridgeInfo && (
-              <div className="bg-gray-800 rounded-lg p-4 space-y-2">
-                <p className="text-xs text-gray-400">To deposit, send PUMP tokens to the bridge address on Solana:</p>
-                <div className="flex items-center gap-2 bg-gray-900 px-3 py-2 rounded">
-                  <code className="text-xs font-mono text-purple-300 break-all">{bridgeInfo.bridgeDepositAddress}</code>
-                  <CopyButton text={bridgeInfo.bridgeDepositAddress} />
-                </div>
-                <p className="text-xs text-gray-500">Or use the form below (prototype mode):</p>
-              </div>
-            )}
-
             {/* Chain Info */}
             <div className="flex items-center justify-between px-4 py-3 bg-gray-800 rounded-lg">
               <div className="text-center">
