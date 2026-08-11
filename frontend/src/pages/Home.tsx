@@ -190,9 +190,9 @@ export function HomePage() {
                       <StatusBadge status={tx.status} />
                       <div>
                         <HashDisplay hash={tx.txHash} type="tx" />
-                        <p className="text-xs text-gray-500 mt-0.5">
+                        {/* <p className="text-xs text-gray-500 mt-0.5">
                           <AddressLink address={tx.sender} copyable={false} /> → <AddressLink address={tx.recipient} copyable={false} />
-                        </p>
+                        </p> */}
                       </div>
                     </div>
                     <div className="text-right">

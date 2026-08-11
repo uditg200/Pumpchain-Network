@@ -11,6 +11,7 @@ interface Tx {
   amount: string;
   fee: string;
   status: string;
+  type: string;
   gasUsed: number;
   timestamp: string;
 }
@@ -40,6 +41,7 @@ export function TransactionsPage() {
               <thead>
                 <tr className="border-b border-gray-800 text-left">
                   <th className="px-4 py-3 text-xs text-gray-500 font-medium">Transaction</th>
+                  <th className="px-4 py-3 text-xs text-gray-500 font-medium">Type</th>
                   <th className="px-4 py-3 text-xs text-gray-500 font-medium">Block</th>
                   <th className="px-4 py-3 text-xs text-gray-500 font-medium">From</th>
                   <th className="px-4 py-3 text-xs text-gray-500 font-medium">To</th>
@@ -52,6 +54,7 @@ export function TransactionsPage() {
                 {data.data.map((tx) => (
                   <tr key={tx.txHash} className="hover:bg-gray-800/50 transition-colors">
                     <td className="px-4 py-3"><HashDisplay hash={tx.txHash} type="tx" /></td>
+                    <td className="px-4 py-3"><TxTypeBadge type={tx.type} /></td>
                     <td className="px-4 py-3 text-gray-400 font-mono">{tx.blockNumber ?? '-'}</td>
                     <td className="px-4 py-3"><AddressLink address={tx.sender} copyable={false} /></td>
                     <td className="px-4 py-3"><AddressLink address={tx.recipient} copyable={false} /></td>
@@ -70,3 +73,20 @@ export function TransactionsPage() {
   );
 }
 
+
+const typeLabels: Record<string, { label: string; color: string }> = {
+  TRANSFER: { label: 'Transfer', color: 'bg-blue-900/40 text-blue-300 border-blue-700/50' },
+  BRIDGE_DEPOSIT: { label: 'Bridge In', color: 'bg-purple-900/40 text-purple-300 border-purple-700/50' },
+  BRIDGE_WITHDRAW: { label: 'Bridge Out', color: 'bg-orange-900/40 text-orange-300 border-orange-700/50' },
+  FAUCET_CLAIM: { label: 'Faucet', color: 'bg-green-900/40 text-green-300 border-green-700/50' },
+  CONTRACT_CALL: { label: 'Contract', color: 'bg-gray-800 text-gray-300 border-gray-700' },
+};
+
+function TxTypeBadge({ type }: { type: string }) {
+  const cfg = typeLabels[type] ?? { label: type, color: 'bg-gray-800 text-gray-400 border-gray-700' };
+  return (
+    <span className={`inline-flex items-center px-2 py-0.5 text-[10px] font-medium rounded border whitespace-nowrap ${cfg.color}`}>
+      {cfg.label}
+    </span>
+  );
+}

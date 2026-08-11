@@ -39,6 +39,7 @@ export class BridgeService {
     );
     this.withdrawalService = new BridgeWithdrawalService(
       accountService,
+      transactionService,
       db,
     );
   }

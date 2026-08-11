@@ -11,7 +11,7 @@ export interface PaginationParams { page: number; pageSize: number; sort?: SortO
 export interface PaginatedResult<T> { items: T[]; total: number; page: number; pageSize: number; totalPages: number; }
 export interface ExplorerOverview { currentBlock: number; latestBlockHash: string; totalTransactions: number; tps: number; activeAccounts: number; totalGasUsed: string; totalGasFees: string; networkUptime: number; latestBlocks: ExplorerBlock[]; latestTransactions: ExplorerTransaction[]; }
 export interface ExplorerBlock { blockNumber: number; blockHash: string; parentHash: string; stateRoot: string; timestamp: string; sequencer: string; transactionCount: number; gasUsed: number; gasLimit: number; }
-export interface ExplorerTransaction { txHash: string; blockNumber: number | null; sender: string; recipient: string; amount: string; gasUsed: number; gasPrice: number; fee: string; status: string; nonce: number; timestamp: string; }
+export interface ExplorerTransaction { txHash: string; blockNumber: number | null; sender: string; recipient: string; amount: string; gasUsed: number; gasPrice: number; fee: string; status: string; type: string; nonce: number; timestamp: string; }
 export interface ExplorerAccount { address: string; accountType: string; balance: string; nonce: number; createdAt: string; updatedAt: string; }
 export interface ExplorerTokenBalance { address: string; tokenSymbol: string; tokenMint: string; balance: string; }
 export interface ExplorerStats { totalBlocks: number; totalTransactions: number; totalAccounts: number; totalGasUsed: string; totalGasFees: string; avgBlockTime: number; avgTxPerBlock: number; tps: number; latestBlockTime: string | null; }
@@ -63,7 +63,7 @@ export class ExplorerService {
   async getTransactionByHash(hash: string): Promise<ExplorerTransaction | null> {
     const tx = this.transactionService.getTransaction(hash);
     if (!tx) return null;
-    return { txHash: tx.txHash, blockNumber: tx.blockNumber, sender: tx.sender, recipient: tx.recipient, amount: tx.amount.toString(), gasUsed: tx.gasUsed, gasPrice: tx.gasPrice, fee: tx.fee.toString(), status: tx.status, nonce: tx.nonce, timestamp: new Date(tx.timestamp).toISOString() };
+    return { txHash: tx.txHash, blockNumber: tx.blockNumber, sender: tx.sender, recipient: tx.recipient, amount: tx.amount.toString(), gasUsed: tx.gasUsed, gasPrice: tx.gasPrice, fee: tx.fee.toString(), status: tx.status, type: tx.type, nonce: tx.nonce, timestamp: new Date(tx.timestamp).toISOString() };
   }
 
   async getAccount(address: string): Promise<ExplorerAccount | null> {
@@ -123,7 +123,7 @@ export class ExplorerService {
   private getMemTxs(page: number, pageSize: number): PaginatedResult<ExplorerTransaction> {
     const { transactions: memTxs, total } = this.transactionService.getTransactions(page, pageSize);
     return {
-      items: memTxs.map((tx) => ({ txHash: tx.txHash, blockNumber: tx.blockNumber, sender: tx.sender, recipient: tx.recipient, amount: tx.amount.toString(), gasUsed: tx.gasUsed, gasPrice: tx.gasPrice, fee: tx.fee.toString(), status: tx.status, nonce: tx.nonce, timestamp: new Date(tx.timestamp).toISOString() })),
+      items: memTxs.map((tx) => ({ txHash: tx.txHash, blockNumber: tx.blockNumber, sender: tx.sender, recipient: tx.recipient, amount: tx.amount.toString(), gasUsed: tx.gasUsed, gasPrice: tx.gasPrice, fee: tx.fee.toString(), status: tx.status, type: tx.type, nonce: tx.nonce, timestamp: new Date(tx.timestamp).toISOString() })),
       total, page, pageSize, totalPages: Math.ceil(total / pageSize),
     };
   }

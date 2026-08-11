@@ -21,7 +21,8 @@ export function BlocksPage() {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['explorer-blocks', page],
     queryFn: () => fetchApiWithMeta<Block[]>(`/blocks?page=${page}&pageSize=20`),
-    staleTime: Infinity, // Never auto-refetch — user manually navigates pages
+    staleTime: 30_000,
+    refetchOnMount: 'always',
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });

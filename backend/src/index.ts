@@ -16,7 +16,7 @@ const server = createServer(app);
 initWebSocket(server);
 
 // Start the Pumpchain network (genesis + sequencer)
-startNetwork(registry);
+await startNetwork(registry);
 
 server.listen(env.PORT, () => {
   console.log(`[Pumpchain Backend] Server running on port ${env.PORT}`);

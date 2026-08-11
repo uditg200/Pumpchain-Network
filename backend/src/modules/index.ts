@@ -69,10 +69,22 @@ export function createServiceRegistry(): ServiceRegistry {
   };
 }
 
-export function startNetwork(registry: ServiceRegistry): void {
-  registry.networkService.initialize();
-  registry.sequencerService.start();
+export async function startNetwork(registry: ServiceRegistry): Promise<void> {
+  // Load persisted state from PostgreSQL
+  const hasBlocks = await registry.blockService.loadFromDb();
+  await registry.transactionService.loadFromDb();
+  await registry.accountService.loadFromDb();
 
-  console.log('[Pumpchain] Network initialized with genesis block');
-  console.log(`[Pumpchain] Block height: ${registry.networkService.getCurrentBlockHeight()}`);
+  // Only create genesis if no blocks exist in DB
+  if (!hasBlocks) {
+    registry.networkService.initialize();
+    console.log('[Pumpchain] Network initialized with genesis block');
+  } else {
+    // Mark network as initialized without creating duplicate genesis
+    console.log(`[Pumpchain] Restored from database — block height: ${registry.blockService.getCurrentHeight()}`);
+  }
+
+  // Start the sequencer
+  registry.sequencerService.start();
+  console.log(`[Pumpchain] Block height: ${registry.blockService.getCurrentHeight()}`);
 }

@@ -1,4 +1,5 @@
 import type { PumpchainAccountData } from './account.types.js';
+import { persistAccount, loadAccounts } from '../../db/persistence.js';
 
 /**
  * AccountService manages Pumpchain L2 account state.
@@ -41,6 +42,7 @@ export class AccountService {
     const account = this.getOrCreate(address);
     account.balance += amount;
     account.updatedAt = Date.now();
+    persistAccount(account).catch(() => {});
     return account;
   }
 
@@ -54,6 +56,7 @@ export class AccountService {
     }
     account.balance -= amount;
     account.updatedAt = Date.now();
+    persistAccount(account).catch(() => {});
     return account;
   }
 
@@ -64,7 +67,20 @@ export class AccountService {
     const account = this.getOrCreate(address);
     account.nonce += 1;
     account.updatedAt = Date.now();
+    persistAccount(account).catch(() => {});
     return account.nonce;
+  }
+
+  /**
+   * Loads accounts from PostgreSQL on startup.
+   */
+  async loadFromDb(): Promise<void> {
+    const dbAccounts = await loadAccounts();
+    if (dbAccounts.length === 0) return;
+    for (const acc of dbAccounts) {
+      this.accounts.set(acc.address, acc);
+    }
+    console.log(`[AccountService] Loaded ${dbAccounts.length} accounts from database`);
   }
 
   /**

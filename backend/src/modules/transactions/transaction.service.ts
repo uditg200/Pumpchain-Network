@@ -7,6 +7,7 @@ import { TransactionExecutionService } from './execution.service.js';
 import { TransactionPool } from './transaction.pool.js';
 import { ExecutionMutex } from './execution.mutex.js';
 import { broadcastTransactionSubmitted } from '../../ws/index.js';
+import { persistTransaction, loadTransactions } from '../../db/persistence.js';
 import type {
   PumpchainTransaction,
   TransactionSubmitInput,
@@ -15,7 +16,6 @@ import type {
   ValidationResult,
 } from './transaction.types.js';
 import { TxType, TxStatus } from './transaction.types.js';
-
 /**
  * TransactionService is the main orchestrator for the Pumpchain transaction engine.
  *
@@ -195,6 +195,7 @@ export class TransactionService {
 
       // Mark as executed and release lock
       this.mutex.markExecuted(txHash);
+      persistTransaction(tx).catch(() => {});
       return tx;
     } finally {
       this.mutex.release();
@@ -274,6 +275,57 @@ export class TransactionService {
       .sort((a, b) => b.timestamp - a.timestamp)
       .slice(start, start + pageSize);
     return { transactions, total };
+  }
+
+  /**
+   * Records a transaction directly as confirmed (bypasses pool and sequencer).
+   * Used for bridge/faucet operations that are executed immediately.
+   */
+  recordConfirmed(input: { sender: string; recipient: string; amount: string; type: TxType; inputData?: string }): PumpchainTransaction {
+    const timestamp = Date.now();
+    const txHash = hashTransaction({
+      from: input.sender,
+      to: input.recipient,
+      amount: input.amount,
+      nonce: 0,
+      timestamp,
+      data: input.inputData,
+    });
+
+    const tx: PumpchainTransaction = {
+      txHash,
+      sender: input.sender,
+      recipient: input.recipient,
+      nonce: 0,
+      type: input.type,
+      amount: BigInt(input.amount),
+      gasLimit: 21000,
+      gasPrice: 0,
+      inputData: input.inputData ?? null,
+      signature: null,
+      timestamp,
+      status: TxStatus.Confirmed,
+      blockNumber: this.transactions.size,
+      gasUsed: 0,
+      fee: 0n,
+      errorMessage: null,
+    };
+
+    this.transactions.set(txHash, tx);
+    persistTransaction(tx).catch(() => {});
+    return tx;
+  }
+
+  /**
+   * Loads transactions from PostgreSQL on startup.
+   */
+  async loadFromDb(): Promise<void> {
+    const dbTxs = await loadTransactions();
+    if (dbTxs.length === 0) return;
+    for (const tx of dbTxs) {
+      this.transactions.set(tx.txHash, tx);
+    }
+    console.log(`[TransactionService] Loaded ${dbTxs.length} transactions from database`);
   }
 
   /**

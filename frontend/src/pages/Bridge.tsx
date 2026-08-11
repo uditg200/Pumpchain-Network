@@ -203,7 +203,8 @@ export function BridgePage() {
       setAmount('');
       queryClient.invalidateQueries({ queryKey: ['bridge-stats'] });
       queryClient.invalidateQueries({ queryKey: ['bridge-history', walletAddress] });
-      queryClient.invalidateQueries({ queryKey: ['pumpchain-balance-bridge', walletAddress] });
+      queryClient.invalidateQueries({ queryKey: ['pumpchain-balance-bridge', walletAddress], refetchType: 'all' });
+      queryClient.invalidateQueries({ queryKey: ['solana-pump-balance', walletAddress], refetchType: 'all' });
     },
   });
 
@@ -364,7 +365,7 @@ export function BridgePage() {
                         {op.direction === 'DEPOSIT' ? 'Sol → Pump' : 'Pump → Sol'}
                       </span>
                       <span className="text-sm text-white font-mono">
-                        {formatAmount(op.amount, op.direction === 'DEPOSIT' ? 6 : 9)} PUMP
+                        {formatAmount(op.amount, 6)} PUMP
                       </span>
                     </div>
                     <div className="flex items-center gap-3">

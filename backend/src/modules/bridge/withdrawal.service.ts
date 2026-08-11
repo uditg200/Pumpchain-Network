@@ -9,6 +9,7 @@ import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
 } from '@solana/spl-token';
 import type { AccountService } from '../accounts/account.service.js';
+import type { TransactionService } from '../transactions/transaction.service.js';
 import type { Database } from '../../db/index.js';
 import { bridgeTransactions } from '../../db/schema.js';
 import { broadcastBridgeUpdated } from '../../ws/index.js';
@@ -40,6 +41,7 @@ export class BridgeWithdrawalService {
 
   constructor(
     private readonly accountService: AccountService,
+    private readonly transactionService: TransactionService,
     private readonly db: Database,
   ) {
     this.connection = new Connection(env.SOLANA_RPC_URL, 'confirmed');
@@ -108,6 +110,16 @@ export class BridgeWithdrawalService {
 
     // 3. Debit Pumpchain balance (instant)
     this.accountService.debit(input.walletAddress, amount);
+
+    // Record in transaction history (shows in explorer/tx page)
+    const { TxType } = await import('../transactions/transaction.types.js');
+    this.transactionService.recordConfirmed({
+      sender: input.walletAddress,
+      recipient: PUMPCHAIN_BRIDGE_ADDRESS,
+      amount: input.amount, // Keep in 9 decimals for display consistency
+      type: TxType.BridgeWithdraw,
+      inputData: `bridge:withdraw:PUMP:${bridgeId}`,
+    });
 
     // 4. Send REAL PUMP tokens on Solana from bridge wallet to user
     let solanaSignature: string;

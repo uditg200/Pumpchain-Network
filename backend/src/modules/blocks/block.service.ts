@@ -1,6 +1,7 @@
 import type { PumpchainBlockData, BlockProducerInput } from './block.types.js';
 import { createGenesisBlock, createBlock, computeBlockHash } from './block.producer.js';
 import { ZERO_HASH } from './block.hash.js';
+import { persistBlock, loadBlocks } from '../../db/persistence.js';
 
 /**
  * BlockService manages the Pumpchain block state.
@@ -23,7 +24,25 @@ export class BlockService {
     const genesis = createGenesisBlock(genesisTimestamp);
     this.blocks.push(genesis);
     this.blocksByHash.set(genesis.blockHash, genesis);
+    persistBlock(genesis).catch(() => {});
     return genesis;
+  }
+
+  /**
+   * Loads blocks from PostgreSQL on startup.
+   * Call before initialize() to restore persisted state.
+   */
+  async loadFromDb(): Promise<boolean> {
+    const dbBlocks = await loadBlocks();
+    if (dbBlocks.length === 0) return false;
+
+    this.blocks = dbBlocks;
+    this.blocksByHash.clear();
+    for (const block of dbBlocks) {
+      this.blocksByHash.set(block.blockHash, block);
+    }
+    console.log(`[BlockService] Loaded ${dbBlocks.length} blocks from database`);
+    return true;
   }
 
   /**
@@ -50,6 +69,7 @@ export class BlockService {
 
     this.blocks.push(block);
     this.blocksByHash.set(block.blockHash, block);
+    persistBlock(block).catch(() => {});
     return block;
   }
 

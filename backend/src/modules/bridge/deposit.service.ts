@@ -87,16 +87,16 @@ export class BridgeDepositService {
     // Directly credit the account (instant, no sequencer needed)
     this.accountService.credit(input.walletAddress, BigInt(pumpchainAmount));
 
-    // Generate a tx hash for record-keeping (not submitted to pool to avoid double-credit)
-    const { hashTransaction } = await import('../blocks/block.hash.js');
-    const txHash = hashTransaction({
-      from: PUMPCHAIN_BRIDGE_ADDRESS,
-      to: input.walletAddress,
+    // Record in transaction history (shows in explorer/tx page)
+    const { TxType } = await import('../transactions/transaction.types.js');
+    const recordedTx = this.transactionService.recordConfirmed({
+      sender: PUMPCHAIN_BRIDGE_ADDRESS,
+      recipient: input.walletAddress,
       amount: pumpchainAmount,
-      nonce: 0,
-      timestamp: Date.now(),
-      data: `bridge:deposit:PUMP:${bridgeId}`,
+      type: TxType.BridgeDeposit,
+      inputData: `bridge:deposit:PUMP:${bridgeId}`,
     });
+    const txHash = recordedTx.txHash;
 
     // 4. Confirm
     await this.db
