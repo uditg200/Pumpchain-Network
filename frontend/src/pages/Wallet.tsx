@@ -165,7 +165,7 @@ export function WalletPage() {
   }
 
   const totalFee = gasEstimate
-    ? `${formatPump(gasEstimate.estimatedFee)} PUMP`
+    ? `${formatPump(gasEstimate.estimatedFee)} ANSEM`
     : '...';
 
   return (
@@ -175,7 +175,7 @@ export function WalletPage() {
       {/* Connect Prompt */}
       {!connected && (
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center space-y-4">
-          <p className="text-gray-400">Connect your Solana wallet to manage PUMP</p>
+          <p className="text-gray-400">Connect your Solana wallet to manage ANSEM</p>
           <WalletConnectButton />
         </div>
       )}
@@ -185,7 +185,7 @@ export function WalletPage() {
           {/* Account Overview */}
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-gray-400">Pumpchain Account</h3>
+              <h3 className="text-sm font-semibold text-gray-400">Ansem Network Account</h3>
               <CopyButton text={walletAddress} />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -194,7 +194,7 @@ export function WalletPage() {
                 <p className="font-mono text-sm text-gray-300 truncate">{walletAddress}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-500">PUMP Balance</p>
+                <p className="text-xs text-gray-500">ANSEM Balance</p>
                 <p className="text-xl font-mono font-bold text-pump-400">
                   {account ? formatPump(account.balance) : '0'}
                 </p>
@@ -206,9 +206,9 @@ export function WalletPage() {
             </div>
           </div>
 
-          {/* Send PUMP Form */}
+          {/* Send ANSEM Form */}
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-5">
-            <h3 className="text-sm font-semibold text-gray-300">Send PUMP</h3>
+            <h3 className="text-sm font-semibold text-gray-300">Send ANSEM</h3>
 
             {/* Recipient */}
             <div className="space-y-1">
@@ -217,7 +217,7 @@ export function WalletPage() {
                 type="text"
                 value={recipient}
                 onChange={(e) => setRecipient(e.target.value)}
-                placeholder="Enter Pumpchain address..."
+                placeholder="Enter Ansem Network address..."
                 className="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white font-mono placeholder-gray-500 focus:outline-none focus:border-pump-500"
                 disabled={confirmation.status !== 'idle'}
               />
@@ -225,7 +225,7 @@ export function WalletPage() {
 
             {/* Amount */}
             <div className="space-y-1">
-              <label className="text-xs text-gray-500">Amount (PUMP)</label>
+              <label className="text-xs text-gray-500">Amount (ANSEM)</label>
               <input
                 type="number"
                 value={amount}
@@ -259,7 +259,7 @@ export function WalletPage() {
               <div className="bg-yellow-900/20 border border-yellow-700/50 rounded-lg p-4 space-y-3">
                 <p className="text-sm text-yellow-300">Confirm transaction?</p>
                 <p className="text-xs text-gray-400">
-                  Send <strong className="text-white">{amount} PUMP</strong> to{' '}
+                  Send <strong className="text-white">{amount} ANSEM</strong> to{' '}
                   <span className="font-mono text-xs">{recipient.slice(0, 8)}...{recipient.slice(-4)}</span>
                 </p>
                 <p className="text-xs text-gray-500">Fee: {totalFee}</p>
@@ -287,7 +287,7 @@ export function WalletPage() {
                 disabled={!recipient || !amount || parseFloat(amount) <= 0}
                 className="w-full py-3 bg-pump-600 hover:bg-pump-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                SEND PUMP
+                SEND ANSEM
               </button>
             )}
 
@@ -313,7 +313,7 @@ export function WalletPage() {
               <h3 className="text-sm font-semibold text-gray-300">Recent Transactions</h3>
             </div>
             {(!txHistory || txHistory.transactions.length === 0) ? (
-              <EmptyState title="No transactions" message="Send PUMP or claim from the faucet" />
+              <EmptyState title="No transactions" message="Bridge ANSEM from Solana to get started" />
             ) : (
               <div className="divide-y divide-gray-800">
                 {txHistory.transactions.map((tx) => (
@@ -330,7 +330,7 @@ export function WalletPage() {
                     </div>
                     <div className="text-right">
                       <p className={`text-xs font-mono ${tx.sender === walletAddress ? 'text-red-400' : 'text-green-400'}`}>
-                        {tx.sender === walletAddress ? '-' : '+'}{formatPump(tx.amount)} PUMP
+                        {tx.sender === walletAddress ? '-' : '+'}{formatPump(tx.amount)} ANSEM
                       </p>
                       <p className="text-xs text-gray-600">{timeAgo(tx.timestamp)}</p>
                     </div>

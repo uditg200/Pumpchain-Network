@@ -11,9 +11,7 @@ const navLinks = [
   { to: '/tx', label: 'Transactions' },
   { to: '/network', label: 'Network' },
   { to: '/bridge', label: 'Bridge' },
-  { to: '/faucet', label: 'Faucet' },
   { to: '/wallet', label: 'Wallet' },
-  { to: '/developers', label: 'Developers' },
 ];
 
 export function Layout() {
@@ -36,7 +34,7 @@ export function Layout() {
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
             <NavLink to="/" className="text-base font-bold text-pump-400 hover:text-pump-300" aria-label="Home">
-              PUMPCHAIN
+              ANSEM NETWORK
             </NavLink>
           </div>
 
@@ -78,7 +76,7 @@ export function Layout() {
           <div className="absolute inset-0 bg-black/60" onClick={() => setSidebarOpen(false)} />
           <aside className="absolute left-0 top-0 bottom-0 w-64 bg-gray-950 border-r border-gray-800 flex flex-col animate-slide-in">
             <div className="flex items-center justify-between px-4 h-14 border-b border-gray-800">
-              <span className="text-sm font-bold text-pump-400">PUMPCHAIN</span>
+              <span className="text-sm font-bold text-pump-400">ANSEM NETWORK</span>
               <button onClick={() => setSidebarOpen(false)} className="p-1.5 text-gray-400 hover:text-white" aria-label="Close menu">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
@@ -121,7 +119,7 @@ export function Layout() {
       {/* Footer */}
       <footer className="border-t border-gray-800 mt-auto" role="contentinfo">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-600">
-          <span>Pumpchain Network</span>
+          <span>Ansem Network</span>
           <NetworkIndicator />
         </div>
       </footer>

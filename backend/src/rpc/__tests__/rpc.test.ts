@@ -38,7 +38,7 @@ describe('Pumpchain JSON-RPC API', () => {
   describe('pumpchain_chainId', () => {
     it('returns the chain ID', async () => {
       const res = await rpc.dispatch('pumpchain_chainId', []);
-      expect(res.result).toBe('pumpchain-mainnet');
+      expect(res.result).toBe('ansem-mainnet');
       expect(res.error).toBeUndefined();
     });
   });
@@ -242,10 +242,10 @@ describe('Pumpchain JSON-RPC API', () => {
       const res = await rpc.dispatch('pumpchain_getNetworkInfo', []);
       expect(res.error).toBeUndefined();
       const data = res.result as Record<string, unknown>;
-      expect(data['networkId']).toBe('pumpchain-mainnet');
-      expect(data['chainName']).toBe('Pumpchain Network');
-      expect(data['nativeSymbol']).toBe('PUMP');
-      expect(data['environment']).toBe('testnet');
+      expect(data['networkId']).toBe('ansem-mainnet');
+      expect(data['chainName']).toBe('Ansem Network');
+      expect(data['nativeSymbol']).toBe('ANSEM');
+      expect(data['environment']).toBe('mainnet');
       expect(data['currentBlockHeight']).toBe(0);
       expect(data['status']).toBeDefined();
     });

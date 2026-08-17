@@ -109,9 +109,9 @@ export function FaucetPage() {
     <div className="max-w-2xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold text-white">PUMPCHAIN FAUCET</h2>
+        <h2 className="text-2xl font-bold text-white">ANSEM NETWORK FAUCET</h2>
         <p className="text-gray-400">
-          Get free PUMP tokens for testing on the Pumpchain Network
+          Get free ANSEM tokens for testing on the Ansem Network
         </p>
         <div className="inline-block px-3 py-1 rounded-full bg-yellow-900/30 border border-yellow-700/50">
           <span className="text-xs text-yellow-400">
@@ -123,7 +123,7 @@ export function FaucetPage() {
       {/* Connect Wallet */}
       {!connected && (
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center space-y-4">
-          <p className="text-gray-400">Connect your Solana wallet to claim PUMP</p>
+          <p className="text-gray-400">Connect your Solana wallet to claim ANSEM</p>
           <WalletConnectButton />
         </div>
       )}
@@ -142,10 +142,10 @@ export function FaucetPage() {
           {/* Current Balance */}
           <div className="space-y-1">
             <label className="text-xs text-gray-500 uppercase tracking-wide">
-              Current PUMP Balance
+              Current ANSEM Balance
             </label>
             <p className="text-2xl font-mono font-bold text-pump-400">
-              {data ? formatPump(data.balance) : '0'} PUMP
+              {data ? formatPump(data.balance) : '0'} ANSEM
             </p>
           </div>
 
@@ -153,7 +153,7 @@ export function FaucetPage() {
           <div className="space-y-1">
             <label className="text-xs text-gray-500 uppercase tracking-wide">Claim Amount</label>
             <p className="text-lg font-mono text-white">
-              {data ? formatPump(data.claimAmount) : '...'} PUMP
+              {data ? formatPump(data.claimAmount) : '...'} ANSEM
             </p>
           </div>
 
@@ -166,7 +166,7 @@ export function FaucetPage() {
             {claimMutation.isPending
               ? 'Claiming...'
               : data?.eligible
-                ? 'CLAIM PUMP'
+                ? 'CLAIM ANSEM'
                 : 'Cooldown Active'}
           </button>
 
@@ -238,7 +238,7 @@ export function FaucetPage() {
       <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 space-y-2">
         <p className="text-xs text-gray-500 leading-relaxed">
           This faucet is for <strong className="text-gray-400">testnet/development use only</strong>.
-          On mainnet, users should bridge real PUMP tokens from Solana using the{' '}
+          On mainnet, users should bridge real ANSEM tokens from Solana using the{' '}
           <a href="/bridge" className="text-pump-400 hover:underline">Bridge</a>.
           Faucet claims are rate-limited and tokens distributed here are for testing the network functionality.
         </p>

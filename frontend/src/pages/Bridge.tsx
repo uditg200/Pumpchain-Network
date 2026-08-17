@@ -163,7 +163,7 @@ export function BridgePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           walletAddress,
-          asset: 'PUMP',
+          asset: 'ANSEM',
           amount: amountBaseUnits,
           solanaSignature: signature,
         }),
@@ -191,7 +191,7 @@ export function BridgePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           walletAddress,
-          asset: 'PUMP',
+          asset: 'ANSEM',
           amount: amountBaseUnits,
         }),
       });
@@ -214,13 +214,13 @@ export function BridgePage() {
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold text-white">PUMPCHAIN BRIDGE</h2>
-        <p className="text-gray-400">Bridge PUMP between Solana and Pumpchain</p>
+        <h2 className="text-2xl font-bold text-white">ANSEM NETWORK BRIDGE</h2>
+        <p className="text-gray-400">Bridge ANSEM between Solana and Ansem Network</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard label="Total Bridged" value={stats ? formatAmount(stats.totalBridged, 6) + ' PUMP' : '0'} />
+        <StatCard label="Total Bridged" value={stats ? formatAmount(stats.totalBridged, 6) + ' ANSEM' : '0'} />
         <StatCard label="Pending" value={stats?.pendingTransfers.toString() ?? '0'} />
         <StatCard label="Completed" value={stats?.completedTransfers.toString() ?? '0'} />
         <StatCard label="Operations" value={stats?.totalOperations.toString() ?? '0'} />
@@ -238,18 +238,18 @@ export function BridgePage() {
         <>
           {/* Balances Overview */}
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-            <h3 className="text-sm font-semibold text-gray-400 mb-3">Your PUMP Balances</h3>
+            <h3 className="text-sm font-semibold text-gray-400 mb-3">Your ANSEM Balances</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-gray-800 rounded-lg p-4">
                 <p className="text-xs text-purple-400 mb-1">Solana (SPL Token)</p>
                 <p className="text-xl font-mono font-bold text-white">
-                  {solanaPumpBalance?.uiAmount.toFixed(2) ?? '0'} PUMP
+                  {solanaPumpBalance?.uiAmount.toFixed(2) ?? '0'} ANSEM
                 </p>
               </div>
               <div className="bg-gray-800 rounded-lg p-4">
-                <p className="text-xs text-green-400 mb-1">Pumpchain (Native)</p>
+                <p className="text-xs text-green-400 mb-1">Ansem Network (Native)</p>
                 <p className="text-xl font-mono font-bold text-white">
-                  {pumpchainBalance ? formatAmount(pumpchainBalance) : '0'} PUMP
+                  {pumpchainBalance ? formatAmount(pumpchainBalance) : '0'} ANSEM
                 </p>
               </div>
             </div>
@@ -262,7 +262,7 @@ export function BridgePage() {
                   rel="noopener noreferrer"
                   className="text-xs text-pump-400 hover:text-pump-300 underline"
                 >
-                  Buy PUMP on Jupiter →
+                  Buy ANSEM on Jupiter →
                 </a>
                 <span className="text-xs text-gray-600">|</span>
                 <span className="text-xs text-gray-500">
@@ -283,7 +283,7 @@ export function BridgePage() {
                   direction === 'deposit' ? 'bg-purple-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-white'
                 }`}
               >
-                Deposit (Solana → Pumpchain)
+                Deposit (Solana → Ansem Network)
               </button>
               <button
                 onClick={() => setDirection('withdraw')}
@@ -291,7 +291,7 @@ export function BridgePage() {
                   direction === 'withdraw' ? 'bg-pump-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-white'
                 }`}
               >
-                Withdraw (Pumpchain → Solana)
+                Withdraw (Ansem Network → Solana)
               </button>
             </div>
 
@@ -300,21 +300,21 @@ export function BridgePage() {
               <div className="text-center">
                 <p className="text-xs text-gray-500">From</p>
                 <p className="text-sm font-medium text-white">
-                  {direction === 'deposit' ? 'Solana' : 'Pumpchain'}
+                  {direction === 'deposit' ? 'Solana' : 'Ansem Network'}
                 </p>
               </div>
               <div className="text-gray-600">→</div>
               <div className="text-center">
                 <p className="text-xs text-gray-500">To</p>
                 <p className="text-sm font-medium text-white">
-                  {direction === 'deposit' ? 'Pumpchain' : 'Solana'}
+                  {direction === 'deposit' ? 'Ansem Network' : 'Solana'}
                 </p>
               </div>
             </div>
 
             {/* Amount */}
             <div className="space-y-2">
-              <label className="text-xs text-gray-500 uppercase tracking-wide">Amount (PUMP)</label>
+              <label className="text-xs text-gray-500 uppercase tracking-wide">Amount (ANSEM)</label>
               <input
                 type="number"
                 value={amount}
@@ -365,7 +365,7 @@ export function BridgePage() {
                         {op.direction === 'DEPOSIT' ? 'Sol → Pump' : 'Pump → Sol'}
                       </span>
                       <span className="text-sm text-white font-mono">
-                        {formatAmount(op.amount, 6)} PUMP
+                        {formatAmount(op.amount, 6)} ANSEM
                       </span>
                     </div>
                     <div className="flex items-center gap-3">

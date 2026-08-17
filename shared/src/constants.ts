@@ -1,8 +1,8 @@
 // Pumpchain Network Constants
 
-export const PUMPCHAIN_NETWORK_ID = 'pumpchain-mainnet';
-export const PUMPCHAIN_CHAIN_NAME = 'Pumpchain Network';
-export const PUMPCHAIN_NATIVE_SYMBOL = 'PUMP';
+export const PUMPCHAIN_NETWORK_ID = 'ansem-mainnet';
+export const PUMPCHAIN_CHAIN_NAME = 'Ansem Network';
+export const PUMPCHAIN_NATIVE_SYMBOL = 'ANSEM';
 export const PUMPCHAIN_ENVIRONMENT = 'mainnet';
 
 export const PUMPCHAIN_BLOCK_TIME_MS = 400; // Target block time in milliseconds

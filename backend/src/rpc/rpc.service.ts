@@ -68,7 +68,7 @@ export class RpcService {
   // Params: none
   // ─────────────────────────────────────────────────────────────────────────
   private chainId() {
-    return { result: 'pumpchain-mainnet' };
+    return { result: 'ansem-mainnet' };
   }
 
   // ─────────────────────────────────────────────────────────────────────────

@@ -82,7 +82,7 @@ export function DevelopersPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <InfoCard label="Network" value="Pumpchain Mainnet" />
           <InfoCard label="Chain ID" value="pumpchain-mainnet" copiable />
-          <InfoCard label="Native Token" value="PUMP" />
+          <InfoCard label="Native Token" value="ANSEM" />
           <InfoCard label="Settlement" value="Solana Mainnet" />
         </div>
 
@@ -112,11 +112,11 @@ export function DevelopersPage() {
             <ConfigRow label="RPC Endpoint" value={RPC_URL} />
             <ConfigRow label="Chain ID" value="pumpchain-mainnet" />
             <ConfigRow label="Network Name" value="Pumpchain Network" />
-            <ConfigRow label="Native Token" value="PUMP" />
+            <ConfigRow label="Native Token" value="ANSEM" />
             <ConfigRow label="Decimals" value="9" />
             <ConfigRow label="Block Time" value="~2000ms" />
             <ConfigRow label="Settlement Layer" value="Solana Mainnet" />
-            <ConfigRow label="Gas Token" value="PUMP" />
+            <ConfigRow label="Gas Token" value="ANSEM" />
           </div>
         </Section>
 
@@ -219,7 +219,7 @@ export function DevelopersPage() {
   "result": {
     "networkId": "pumpchain-mainnet",
     "chainName": "Pumpchain Network",
-    "nativeSymbol": "PUMP",
+    "nativeSymbol": "ANSEM",
     "environment": "mainnet",
     "currentBlockHeight": 100,
     "tps": 0,
@@ -265,7 +265,7 @@ export function DevelopersPage() {
           </div>
           <h4 className="text-sm font-semibold text-gray-300 mt-6 mb-2">Transaction Types</h4>
           <ul className="text-sm text-gray-400 space-y-1 list-disc list-inside">
-            <li><code className="text-gray-300">TRANSFER</code> — Send PUMP between accounts</li>
+            <li><code className="text-gray-300">TRANSFER</code> — Send ANSEM between accounts</li>
             <li><code className="text-gray-300">BRIDGE_DEPOSIT</code> — Solana → Pumpchain</li>
             <li><code className="text-gray-300">BRIDGE_WITHDRAW</code> — Pumpchain → Solana</li>
             <li><code className="text-gray-300">FAUCET_CLAIM</code> — Testnet faucet drip</li>
@@ -327,7 +327,7 @@ Content-Type: application/json
 Response:
 {
   "amount": "10000000000",
-  "asset": "PUMP",
+  "asset": "ANSEM",
   "transactionHash": "...",
   "nextClaimAt": "2026-08-11T..."
 }`} />

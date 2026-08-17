@@ -78,15 +78,15 @@ export function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-pump-950/40 to-transparent rounded-2xl" />
         <div className="relative text-center space-y-6 max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-            PUMPCHAIN NETWORK
+            ANSEM NETWORK
           </h1>
           <p className="text-lg text-gray-300 leading-relaxed">
-            The SVM Layer 2 for the PUMP ecosystem.
+            The SVM Layer 2 for the ANSEM ecosystem.
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-gray-400">
             <span>Solana settlement.</span>
-            <span>Pumpchain execution.</span>
-            <span>PUMP-powered network economics.</span>
+            <span>Ansem Network execution.</span>
+            <span>ANSEM-powered network economics.</span>
           </div>
 
           {/* CTAs */}
@@ -96,9 +96,6 @@ export function HomePage() {
             </Link>
             <Link to="/bridge" className="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium text-sm border border-gray-700 transition-colors">
               Bridge Assets
-            </Link>
-            <Link to="/faucet" className="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium text-sm border border-gray-700 transition-colors">
-              Get PUMP
             </Link>
           </div>
         </div>
@@ -115,9 +112,9 @@ export function HomePage() {
             <span className="text-sm text-gray-300">Operational</span>
           </div>
           <div className="flex flex-wrap gap-6 text-sm">
-            <InfoPair label="Network" value="Pumpchain Mainnet" />
+            <InfoPair label="Network" value="Ansem Mainnet" />
             <InfoPair label="Settlement" value="Solana Mainnet" />
-            <InfoPair label="Native Asset" value="PUMP" />
+            <InfoPair label="Native Asset" value="ANSEM" />
           </div>
         </div>
       </section>
@@ -133,7 +130,7 @@ export function HomePage() {
           <StatCard label="TPS" value={data.tps.toString()} />
           <StatCard label="Transactions" value={data.totalTransactions.toLocaleString()} />
           <StatCard label="Active Wallets" value={data.activeAccounts.toLocaleString()} />
-          <StatCard label="PUMP in Circulation" value={formatPump(data.totalGasFees)} />
+          <StatCard label="ANSEM in Circulation" value={formatPump(data.totalGasFees)} />
           <StatCard label="Total Gas Used" value={formatPump(data.totalGasUsed)} />
         </section>
       )}
@@ -181,7 +178,7 @@ export function HomePage() {
               <Link to="/tx" className="text-xs text-pump-400 hover:text-pump-300">View All →</Link>
             </div>
             {data.latestTransactions.length === 0 ? (
-              <EmptyState title="No transactions yet" message="Submit a transaction or claim from the faucet" />
+              <EmptyState title="No transactions yet" message="Bridge ANSEM from Solana to get started" />
             ) : (
               <div className="divide-y divide-gray-800">
                 {data.latestTransactions.slice(0, 6).map((tx) => (
@@ -196,7 +193,7 @@ export function HomePage() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs text-white font-mono">{formatPump(tx.amount)} PUMP</p>
+                      <p className="text-xs text-white font-mono">{formatPump(tx.amount)} ANSEM</p>
                       <p className="text-xs text-gray-500">{timeAgo(tx.timestamp)}</p>
                     </div>
                   </div>
@@ -222,8 +219,8 @@ export function HomePage() {
         </section>
       )}
 
-      {/* ─── Bridge & Faucet Activity ─── */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* ─── Bridge Activity ─── */}
+      <section className="grid grid-cols-1 gap-6">
         {/* Bridge Activity */}
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
           <div className="flex items-center justify-between">
@@ -235,20 +232,6 @@ export function HomePage() {
             <MiniStat label="Pending" value={bridgeStats?.pendingTransfers.toString() ?? '0'} />
             <MiniStat label="Completed" value={bridgeStats?.completedTransfers.toString() ?? '0'} />
             <MiniStat label="Operations" value={bridgeStats?.totalOperations.toString() ?? '0'} />
-          </div>
-        </div>
-
-        {/* Faucet Activity */}
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-gray-300">Faucet Activity</h3>
-            <Link to="/faucet" className="text-xs text-pump-400 hover:text-pump-300">Get PUMP →</Link>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <MiniStat label="Claim Amount" value="2 PUMP" />
-            <MiniStat label="Cooldown" value="None" />
-            <MiniStat label="Status" value="Active" />
-            <MiniStat label="Asset" value="PUMP" />
           </div>
         </div>
       </section>

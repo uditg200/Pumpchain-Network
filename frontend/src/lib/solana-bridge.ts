@@ -15,7 +15,7 @@ import {
  * PUMP token mint address on Solana mainnet (official Pump.fun token)
  * This token uses the Token-2022 program (Token Extensions).
  */
-const PUMP_MINT = new PublicKey('pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn');
+const PUMP_MINT = new PublicKey('9cRCn9rGT8V2imeM2BaKs13yhMEais3ruM3rPvTGpump');
 
 /**
  * Bridge deposit address — all users send PUMP here.

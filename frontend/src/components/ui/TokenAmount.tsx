@@ -9,7 +9,7 @@ interface Props {
  * Displays a token amount formatted from base units to human-readable.
  * Uses integer math only — no floating point.
  */
-export function TokenAmount({ amount, symbol = 'PUMP', decimals = 9, className = '' }: Props) {
+export function TokenAmount({ amount, symbol = 'ANSEM', decimals = 9, className = '' }: Props) {
   const formatted = formatFromBase(amount, decimals);
   return (
     <span className={`font-mono ${className}`}>

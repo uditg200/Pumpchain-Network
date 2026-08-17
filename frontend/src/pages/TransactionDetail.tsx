@@ -48,11 +48,11 @@ export function TransactionDetailPage() {
         <Row label="Timestamp" value={`${new Date(data.timestamp).toLocaleString()} (${timeAgo(data.timestamp)})`} />
         <Row label="From"><AddressLink address={data.sender} truncate={false} /></Row>
         <Row label="To"><AddressLink address={data.recipient} truncate={false} /></Row>
-        <Row label="Amount" value={`${formatPump(data.amount)} PUMP`} />
+        <Row label="Amount" value={`${formatPump(data.amount)} ANSEM`} />
         <Row label="Gas Limit" value={gasLimit.toLocaleString()} />
         <Row label="Gas Used" value={data.gasUsed.toLocaleString()} />
         <Row label="Gas Price" value={`${data.gasPrice} lamports`} />
-        <Row label="Fee" value={`${formatPump(data.fee)} PUMP`} />
+        <Row label="Fee" value={`${formatPump(data.fee)} ANSEM`} />
         <Row label="Nonce" value={data.nonce.toString()} />
       </div>
     </div>

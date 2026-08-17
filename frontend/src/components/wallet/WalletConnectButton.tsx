@@ -7,7 +7,7 @@ export function WalletConnectButton() {
   return (
     <WalletMultiButton
       style={{
-        backgroundColor: '#16a34a',
+        backgroundColor: '#9333ea',
         borderRadius: '6px',
         fontSize: '12px',
         height: '32px',
