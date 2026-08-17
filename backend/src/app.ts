@@ -26,7 +26,7 @@ app.use(helmet());
 
 // CORS: allow configured origin + production domain
 app.use(cors({
-  origin: [env.CORS_ORIGIN, 'https://pumpchain.network', 'https://www.pumpchain.network'],
+  origin: [env.CORS_ORIGIN, 'https://ansemchainnetwork.site', 'https://www.ansemchainnetwork.site'],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   maxAge: 86400,
